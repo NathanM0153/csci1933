@@ -12,5 +12,6 @@ public class Game {
 		if (enterdebug.equals("Y")) {
 			debug = true;
 		}
+		//do the actual game at some point
 	}
 }

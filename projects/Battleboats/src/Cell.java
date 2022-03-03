@@ -1,7 +1,7 @@
 public class Cell {
-	char status;
-	int row;
-	int col;
+	private char status;
+	private int row;
+	private int col;
 
 	public char getStatus() {
 		return status;
@@ -16,6 +16,8 @@ public class Cell {
 		return col;
 	}
 	public Cell(int row, int col, char status) { //constructor
-		//i don't know what to do for this
+		this.row = row;
+		this.col = col;
+		this.status = status;
 	}
 }
