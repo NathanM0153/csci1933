@@ -15,6 +15,11 @@ public class Cell {
 	public int getCol() {
 		return col;
 	}
+
+	public boolean equals(Cell other) {
+		return status == other.getStatus();
+	}
+
 	public Cell(int row, int col, char status) { //constructor
 		this.row = row;
 		this.col = col;
