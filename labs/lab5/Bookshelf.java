@@ -119,8 +119,7 @@ public class Bookshelf {
 					numComparisons++;
 					min_idx = j;
 				}
-			// Swap the found minimum element with the first
-			// element
+			// Swap the found minimum element with the first element
 			Book temp = books[min_idx];
 			books[min_idx] = books[i];
 			books[i] = temp;
@@ -167,10 +166,10 @@ public class Bookshelf {
         Bookshelf sorted3 = bookshelf.mergeSortBookshelf();
 
         printBookTitlesAndAuthors(sorted1.getBooks());
-        System.out.println("this is the number of comparisons: " + sorted1.numComparisons);
+        System.out.println("This is the number of comparisons: " + sorted1.numComparisons);
 		printBookTitlesAndAuthors(sorted2.getBooks());
-		System.out.println("this is the number of comparisons: " + sorted2.numComparisons);
+		System.out.println("This is the number of comparisons: " + sorted2.numComparisons);
 		printBookTitlesAndAuthors(sorted3.getBooks());
-		System.out.println("this is the number of comparisons: " + sorted3.numComparisons);
+		System.out.println("This is the number of comparisons: " + sorted3.numComparisons);
 	}
 }

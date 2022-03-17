@@ -1,5 +1,5 @@
 public class HeatGrid {
-    int[][] testarray;
+    int[][] grid;
     int height;
     int width;
     double decay;
@@ -10,7 +10,7 @@ public class HeatGrid {
         return (int) (heat * Math.exp(-1 * decay * distance));
     }
     public HeatGrid(int height, int width) {
-        testarray = new int[height][width]; // sets dimensions of array
+        grid = new int[height][width]; // sets dimensions of array
         this.height = height;
         this.width = width;
     }
@@ -48,21 +48,21 @@ public class HeatGrid {
             }
 
             int temp = Integer.valueOf(src); // can't add string to a list of ints because java is stupid
-            for (int i = 0; i < testarray.length; i++) { // sets array to grid of strings
-                for (int j = 0; j < testarray[i].length; j++) {
+            for (int i = 0; i < grid.length; i++) { // sets array to grid of strings
+                for (int j = 0; j < grid[i].length; j++) {
                     int distance = Math.max(Math.abs(x-i),Math.abs(y-j));
-                    testarray[i][j] = decayHeat(decay, temp, distance);
+                    grid[i][j] += decayHeat(decay, temp, distance);
                 }
             }
-            testarray[x][y] = temp;
+            grid[x][y] = temp;
             return true;
         }
     }
     public String toString() {
         String stringarray = "";
-        for (int i = 0; i < testarray.length; i++) { // sets array to grid of strings
-            for (int j = 0; j < testarray[i].length; j++) {
-                stringarray += testarray[i][j] + " ";
+        for (int i = 0; i < grid.length; i++) { // sets array to grid of strings
+            for (int j = 0; j < grid[i].length; j++) {
+                stringarray += grid[i][j] + " ";
 
             }
             stringarray += "\n";
@@ -70,7 +70,7 @@ public class HeatGrid {
         return stringarray;
     }
     public int[][] getHeats() {
-        return testarray;
+        return grid;
     }
     public int getHeat(int x, int y) {
         if (this.height < x) {
@@ -78,13 +78,13 @@ public class HeatGrid {
         if (this.width < y) {
             return Integer.MAX_VALUE; }
 
-        return testarray[x][y];
+        return grid[x][y];
     }
     public int getNetHeat() {
         int sum = 0;
-        for (int i = 0; i < testarray.length; i++) {
-            for (int j = 0; j < testarray[i].length; j++) {
-                sum += testarray[i][j];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                sum += grid[i][j];
             }
         }
         return sum;
@@ -94,8 +94,7 @@ public class HeatGrid {
         test.placeSource("c",4,5); // sets heat origin location to (4,5);
         // placeSource source = new placeSource("g",4,5); is incorrect
         // cannot treat a method (action) as a class (noun)
-        // test.placeSource("i", 2,2);
-        // overwrites old source? ask for help
+        test.placeSource("i", 2,2);
         System.out.println(test.toString());
         System.out.println(test.getNetHeat());
     }
