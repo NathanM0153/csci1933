@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 import java.io.File;
 
 /**
@@ -215,17 +214,136 @@ public class AList<T extends Comparable> {
 		return toReturn;
 	} // end toString
 
+
+
+	public AList<T> slice(int start, int stop) {
+		AList slicedList = new AList(stop - start); //create empty list
+		int count = 0;
+		for (int i = start; i < stop; i++) {
+			slicedList.add(list[i]);
+		}
+		return slicedList;
+	}
+
+	public AList<T> slice(int start, int stop, int step) {
+		AList slicedList = new AList(stop - start); //create empty list
+		int count = 0;
+		for (int i = start; i < stop; i += step) {
+			slicedList.add(list[i]);
+		}
+		return slicedList;
+	}
+
+	public void merge(T[] array, int left, int mid, int right) {
+		int leftLen = mid - left - 1;
+		int rightLen = right - mid;
+//		int[] leftArr = new int[leftLen];
+		T[] leftArr = (T[]) new Object[leftLen];
+//		int[] rightArr = new int[rightLen];
+		T[] rightArr = (T[]) new Object[rightLen];
+		int leftIndex = 1;
+		int rightIndex = 1;
+		for (int i = 1; i < leftLen; i++) {
+			leftArr[i] = (T) array[left + i];
+		}
+		for (int i = 1; i < rightLen; i++) {
+			rightArr[i] = (T) array[left + i];
+		}
+		for (int i = left; i < right + 1; i++) {
+			if (leftIndex < leftLen && rightIndex < rightLen) {
+				if ((int) leftArr[leftIndex] < (int) rightArr[rightIndex]) {
+					array[i] = leftArr[leftIndex];
+					leftIndex++;
+				} else {
+					array[i] = rightArr[rightIndex];
+					rightIndex++;
+				}
+			}
+		}
+	}
+
+	public void mergeRev(T[] array, int left, int mid, int right) {
+		int leftLen = mid - left - 1;
+		int rightLen = right - mid;
+		T[] leftArr = (T[]) new Object[leftLen];
+		T[] rightArr = (T[]) new Object[rightLen];
+		int leftIndex = 1;
+		int rightIndex = 1;
+		for (int i = 1; i < leftLen; i++) {
+			leftArr[i] = (T) array[left + i];
+		}
+		for (int i = 1; i < rightLen; i++) {
+			rightArr[i] = (T) array[left + i];
+		}
+		for (int i = left; i < right + 1; i++) {
+			if (leftIndex < leftLen && rightIndex < rightLen) {
+				if ((int) leftArr[leftIndex] > (int) rightArr[rightIndex]) {
+					array[i] = leftArr[leftIndex];
+					leftIndex++;
+				} else {
+					array[i] = rightArr[rightIndex];
+					rightIndex++;
+				}
+			}
+		}
+	}
+
+	public void mergeSortRev(T[] array, int left, int right) {
+		if (right > left) {
+			return; //return type is void
+		}
+		int mid = (left + right) / 2;
+		mergeSortRev(array, left, mid);
+		mergeSortRev(array, mid + 1, right);
+		mergeRev(array, left, mid, right);
+	}
+
+	public void mergeSort(T[] array, int left, int right) {
+		if (right <= left) {
+			return; //return type is void
+		}
+		int mid = (left + right) / 2;
+		mergeSort(array, left, mid);
+		mergeSort(array, mid + 1, right);
+		merge(array, left, mid, right);
+	}
+
+	public void sort(boolean ascending) {
+		if (! ascending) {
+			mergeSortRev(list, 1, list.length); //how to insert testList here?
+			//reverse list
+		} else {
+			mergeSort(list, 1, list.length);
+		}
+	}
+
 	// Converts a given file into a list.
 	public static AList<String> fileToAList(File input) {
 		Scanner s;
+		List<String> inputList = new ArrayList<>();
 		try {
 			s = new Scanner(input);
 		} catch (Exception e) {
 			System.out.println("File not found");
 			return null;
 		}
-		// TODO: complete this function.
+		for (int i = 0; i<input.length(); i++) { //iterates through each line
+			inputList += s.nextLine();
+		}
 		return null;
 	}
 
+	public static void main(String[] args) {
+		int capacity = 25;
+		AList testList = new AList(capacity);
+		for (int i = 0; i<capacity; i++) { //creates list of numbers 1 to capacity
+			testList.add(i+1);
+		}
+//		System.out.println(testList.slice(8,15));
+//		System.out.println(testList.slice(4,20,2));
+		testList.sort(true);
+		System.out.println(testList);
+		testList.sort(false);
+		System.out.println(testList);
+	}
 }
