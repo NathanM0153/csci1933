@@ -238,9 +238,12 @@ public class AList<T extends Comparable> {
 		int leftLen = mid - left - 1;
 		int rightLen = right - mid;
 //		int[] leftArr = new int[leftLen];
-		T[] leftArr = (T[]) new Object[leftLen];
+		if (leftLen < 0) {
+			leftLen = 0;
+		}
+		T[] leftArr = (T[]) new Comparable[leftLen];
 //		int[] rightArr = new int[rightLen];
-		T[] rightArr = (T[]) new Object[rightLen];
+		T[] rightArr = (T[]) new Comparable[rightLen];
 		int leftIndex = 1;
 		int rightIndex = 1;
 		for (int i = 1; i < leftLen; i++) {
@@ -310,10 +313,10 @@ public class AList<T extends Comparable> {
 
 	public void sort(boolean ascending) {
 		if (! ascending) {
-			mergeSortRev(list, 1, list.length); //how to insert testList here?
+			mergeSortRev(list, 1, numberOfEntries); //how to insert testList here?
 			//reverse list
 		} else {
-			mergeSort(list, 1, list.length);
+			mergeSort(list, 1, numberOfEntries);
 		}
 	}
 
@@ -328,7 +331,7 @@ public class AList<T extends Comparable> {
 			return null;
 		}
 		for (int i = 0; i<input.length(); i++) { //iterates through each line
-			inputList += s.nextLine();
+//			inputList += s.nextLine();
 		}
 		return null;
 	}
@@ -341,6 +344,7 @@ public class AList<T extends Comparable> {
 		}
 //		System.out.println(testList.slice(8,15));
 //		System.out.println(testList.slice(4,20,2));
+		System.out.println(testList);
 		testList.sort(true);
 		System.out.println(testList);
 		testList.sort(false);
