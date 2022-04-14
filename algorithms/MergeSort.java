@@ -1,18 +1,18 @@
 public void merge(int[] array, int left, int mid, int right) {
-	int leftlen = mid - left - 1;
-	int rightlen = right - mid;
-	int[] leftArr = new int[leftlen];
-	int[] rightArr = new int[rightlen];
+	int leftLen = mid - left - 1;
+	int rightLen = right - mid;
+	int[] leftArr = new int[leftLen];
+	int[] rightArr = new int[rightLen];
 	int leftIndex = 0;
 	int rightIndex = 0;
-	for (int i = 0; i<leftlen; i++) {
+	for (int i = 0; i<leftLen; i++) {
 		leftArr[i] = array[left+i];
 	}
-	for (int i = 0; i<rightlen; i++) {
+	for (int i = 0; i<rightLen; i++) {
 		rightArr[i] = array[left+i];
 	}
 	for (int i = left; i<right+1; i++) {
-		if (leftIndex < leftlen && rightIndex < rightlen) {
+		if (leftIndex < leftLen && rightIndex < rightLen) {
 			if (leftArr[leftIndex] < rightArr[rightIndex]) {
 				array[i] = leftArr[leftIndex];
 				leftIndex++;
