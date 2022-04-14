@@ -3,7 +3,7 @@ import java.util.*;
 public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
 	private Node<T> first, last;
 	private int size;
-	Node node;
+	private Node node;
 
 	public LinkedList() {
 		first = null;
@@ -53,16 +53,13 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
 
 		@Override
 		public T next() {
-			if (hasNext()) {
+			if (hasNext() || node1 == last) {
 				T temp = node1.getData();
-				// for (int i : node1.size)
-				//node1.setNext((Node) node1.getData());
 				node1 = node1.getNext();
 				return temp;
 			} else {
 				return null;
 			}
-
 		}
 	}
 
@@ -77,13 +74,18 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
 		for (int i : x) {
 			sum += i; //sums up linked list
 		}
+		sum += x.last.getData();
+		int count = 0;
 		int[] arr = new int[sum];
-		int ind = 0;
 		for (int i : x) { //for each element in LL
-			for (Integer j=0; j<i; j++) { //loops x times
-				arr[ind] += i;
-				ind++;
+			for (int j=0; j<i; j++) { //loops x times
+				arr[count] += i;
+				count++;
 			}
+		}
+		for (int j=0; j<x.last.getData(); j++) { //loops x times
+			arr[count] += x.last.getData();
+			count++;
 		}
 		return arr;
 	}
@@ -97,12 +99,14 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
 			}
 		}
 		int[] counts = new int[k+1];
-		for (int i : lst.size) {
+		for (int i : lst) {
 			counts[i] += 1;
 		}
 		LinkedList<Integer> ret = new LinkedList<Integer>();
 		for (int i=0; i<k+1; i++) {
-
+			for (int j=0; j<counts[i] ;j++) {
+				ret.add(i);
+			}
 		}
 		return ret;
 	}
@@ -130,6 +134,15 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
 	// TODO implement me!
 	public static void main(String[] args) {
 		LinkedList<Integer> testList = new LinkedList<Integer>();
+		testList.add(7);
+		testList.add(6);
+		testList.add(4);
+		int[] arr = nCopies(testList);
+		for (int i : arr) {
+			System.out.println(i);
+		}
+
+		System.out.println(countingSort(testList));
 		System.out.println(testList);
 		testList.reverse();
 		System.out.println(testList);
