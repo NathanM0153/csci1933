@@ -115,40 +115,71 @@ public class SimpleGraph<T> implements GraphInterface<T> {
         Iterator<VertexInterface<T>> it = this.getVertexIterator();
         while (it.hasNext()) {
             VertexInterface<T> vi = it.next();
-	    vi.unvisit();
-	}
+	        vi.unvisit();
+	    }
     }
 
 
     @Override
     public Queue<VertexInterface<T>> getBreadthFirstTraversal(T origin) {
-	setAllVerticesUnvisited(); //resets state of all vertices to "unvisited"
-        
-	/* your code here*/
-
-
-	return null;
+        //https://www.baeldung.com/java-breadth-first-search
+        setAllVerticesUnvisited(); //resets state of all vertices to "unvisited"
+        Queue<Vertex<T>> vertexQueue = new ArrayDeque<>();
+        Queue<VertexInterface<T>> breadth = new PriorityQueue<>();
+        vertexQueue.add((Vertex<T>) origin);
+        while (! vertexQueue.isEmpty()) {
+            Vertex<T> current = vertexQueue.remove(); //pop head
+            Iterator<VertexInterface<T>> neighbor = current.getNeighborIterator(); //get neighbors
+            while (neighbor.hasNext()) {
+                VertexInterface<T> vertex = neighbor.next();
+                breadth.add(vertex);
+                vertex.visit(); //visits all vertexes
+                vertexQueue.remove();
+            }
+        }
+        return breadth;
     }
 
 
     @Override
     public Queue<VertexInterface<T>> getDepthFirstTraversal(T origin) {
-	setAllVerticesUnvisited(); //resets state of all vertices to "unvisited"
-        
-
-	/* your code here*/
-
-
-
-
-        return null;
+        setAllVerticesUnvisited(); //resets state of all vertices to "unvisited"
+        Stack<VertexInterface<T>> vertexStack = new Stack<>();
+        Queue<VertexInterface<T>> traversal = new PriorityQueue<>();
+        ArrayList<Integer> intlist = new ArrayList<Integer>();
+        vertexStack.push(getVertex(origin));
+        while (! vertexStack.isEmpty()) {
+            VertexInterface<T> current = vertexStack.pop();
+            edgeCount = 0;
+            if (! current.isVisited()) {
+                current.visit(); //visits vertices
+                traversal.add(current);
+                Iterator<VertexInterface<T>> iter = current.getNeighborIterator();
+                while (iter.hasNext()) {
+                    vertexStack.push(iter.next());
+                    edgeCount++;
+                }
+                intlist.add(edgeCount);
+            }
+        }
+        return traversal;
     }
 
+    @Override
     public Map<T, Integer> measureDegrees() {
-
-
-	/* your code here */
-
-	return null;
+        Map<T, Integer> map = new HashMap<>();
+        Map<T, Integer> degrees = new HashMap<>();
+        Integer degree = 0; //TODO: how?
+        T origin = map.getLabel();
+        map.put(origin,degree);
+        T current = null;
+        while (! map.isEmpty()) {
+            current = origin; //set current
+            map.remove(origin); //remove from map
+            degrees.put(current, map.get(current)); //add pair to degree measurement
+            //TODO: how to count degrees?
+        }
+        return map;
     }
 }
+
